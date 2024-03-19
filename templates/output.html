@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis Result</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: linear-gradient(120deg, #FF8E53, #FE6B8B, #FF8E53);
+            background-size: 200% 200%;
+            animation: gradientChange 10s ease infinite;
+            transition: background-color 1s ease;
+            animation: fade-in 1s ease-in-out forwards;
+        }
+        .content {
+            text-align: center;
+            color: #ffffff;
+        }
+        h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            transition: color 0.5s ease;
+        }
+        p {
+            font-size: 24px;
+            margin-bottom: 20px;
+            transition: color 0.5s ease;
+        }
+        .positive {
+            color: #4CAF50;
+        }
+        .neutral {
+            color: #333;
+        }
+        .negative {
+            color: #FF5722;
+        }
+        .emoji {
+            font-size: 64px;
+        }
+        @keyframes gradientChange {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        .animate {
+            animation: scale-up 0.5s ease-in-out;
+        }
+        @keyframes scale-up {
+            0% {
+                transform: scale(0.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="content">
+            <h1>Sentiment Analysis Result</h1>
+            {% if output == 1 %}
+            <p class="positive">Sentiment: Positive <span class="emoji">😊</span></p>
+            {% elif output == 0 %}
+            <p class="neutral">Sentiment: Neutral <span class="emoji">😐</span></p>
+            {% else %}
+            <p class="negative">Sentiment: Negative <span class="emoji">😔</span></p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Update background color based on sentiment
+        const container = document.getElementById('container');
+        const sentiment = '{{ output }}'; // Fetch sentiment from Flask template
+        if (sentiment == '1') {
+            container.style.backgroundColor = '#FF8E53';
+        } else if (sentiment == '0') {
+            container.style.backgroundColor = '#FE6B8B';
+        } else {
+            container.style.backgroundColor = '#FF8E53';
+        }
+
+        container.classList.add('animate');
+    </script>
+</body>
+</html>
